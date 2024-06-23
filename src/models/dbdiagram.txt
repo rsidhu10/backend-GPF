@@ -1,0 +1,186 @@
+Table office {
+  id integer [pk]
+  englishName varchar
+  punjabiName varchar
+  created_at timestamp
+}
+
+Table address {
+  id integer [pk]
+  englishAddress varchar
+  punjabiAddress varchar
+  created_at timestamp
+
+}
+
+Table officeaddress {
+  id integer [pk]
+  office_id integer [ref: > office.id]
+  address_id integer [ref: > address.id]
+  created_at timestamp
+}
+
+Table city {
+  id integer [pk]
+  englishCityName varchar
+  punjabiCityName varchar
+  created_at timestamp
+}
+
+Table officecity {
+  id integer [pk]
+  office_id integer [ref: > office.id]
+  city_id integer [ref: > city.id]
+  created_at timestamp
+}
+
+Table category {
+  id integer [pk]
+  englishCategory varchar [unique]
+  punjabiCategory varchar 
+  created_at timestamp
+}
+
+Table designation {
+  id integer [pk]
+  englishDesignation varchar [unique]
+  punjabiDesignation varchar
+  created_at timestamp
+}
+
+Table categorydesignation {
+  id integer [pk]
+  category_id integer [ref: > category.id]
+  designation_id integer [ref: > designation.id]
+  created_at timestamp
+}
+
+Table employeecategory {
+  id integer [pk]
+  englishCategory varchar
+  punjabiCategory varchar
+  created_at timestamp
+}
+
+Table employeetype {
+  id integer [pk]
+  englishType varchar
+  punjabiType varchar
+  created_at timestamp
+}
+
+Table employeeworkingstatus {
+  id integer [pk]
+  englishWorkingStatus varchar
+  punjabiWorkingStatus varchar
+  created_at timestamp
+}
+
+Table advancereason {
+  id integer [pk]
+  englishAdvanceReason varchar
+  punjabiAdvanceReason varchar
+  rule varchar
+  percent string
+  created_at timestamp
+}
+
+Table retirementreason {
+  id integer [pk]
+  englishReason varchar
+  punjabiReason varchar
+  created_at timestamp
+}
+
+Table employee {
+  id integer [pk]
+  hrmsCode integer [unique]
+  englishName varchar
+  punjabiName varchar
+  englishNominee varchar
+  punjabiNominee varchar
+  englishFatherName varchar
+  punjabiFatherName varchar
+  birthDate date
+  joinDate date
+  retireDate date 
+  cellNo varchar
+  email varchar
+  employeeType varchar
+  isCategory boolean
+  isHandicap boolean
+  isWorking boolean
+  isGpfSubscriber boolean
+  isFinalPaymentCaseRecieved boolean
+  isAuthorityIssued boolean
+  isPaymentMade boolean
+  gpf_nps_No varchar
+  category_id integer [ref: > category.id]
+  designation_id integer [ref: > designation.id]
+  employeeCategory_id integer [ref: > employeecategory.id]
+  employeeType_id integer [ref: > employeetype.id]
+  empWorkingStatus_id integer [ref: > employeeworkingstatus.id]
+  retireReason_id integer [ref:  > retirementreason.id]
+}
+
+
+Table finalpaymentcase {
+  id integer [pk]
+  letterNo varchar
+  letterDate date
+  diaryNo varchar
+  diaryDate date
+  amount integer 
+  office_id integer [ref: > office.id]
+  address_id integer [ref: > address.id]
+  city_id integer [ref: > city.id]
+  employee_id integer [ref: > employee.id]
+  retirementReason_id integer [ref: > retirementreason.id]
+
+}
+
+
+Table advancecase {
+  id integer [pk]
+  letterNo varchar
+  letterDate date
+  diaryNo varchar
+  diaryDate date
+  totalAmountUpto date
+  amountRequired integer 
+  totalAmount integer
+  eligibleAmount integer
+  sanctionedAmount integer
+  office_id integer [ref: > office.id]
+  address_id integer [ref: > address.id]
+  city_id integer [ref: > city.id]
+  employee_id integer [ref: > employee.id]
+  advanceReason_id integer [ref: > advancereason.id]
+
+}
+
+Table finalpaymentauthority {
+  id integer [pk]
+  finalpaymentcase_id integer [ ref: > finalpaymentcase.id]
+  sanctionNo varchar
+  sanctionDate date
+  endstNo varchar
+  endstDate date
+  tvNo varchar
+  tvDate date
+  
+}
+
+Table advanceauthority {
+  id integer 
+  advancecase_id integer [ref: > advancecase.id]
+  sanctionNo varchar
+  sanctionDate date
+  endstNo varchar
+  endstDate date
+  tvNo varchar
+  tvDate date
+  
+  isutilCertificateReceived boolean 
+
+}
